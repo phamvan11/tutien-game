@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -15,10 +16,17 @@
     h1 {
       color: #ffd700;
     }
+    input {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      font-size: 16px;
+      margin: 10px;
+    }
     button {
       padding: 15px 25px;
       font-size: 18px;
-      margin-top: 20px;
+      margin-top: 10px;
       background-color: #4CAF50;
       color: white;
       border: none;
@@ -34,15 +42,25 @@
 </head>
 <body>
   <h1>🌌 Tu Tiên Chi Lộ 🌌</h1>
-  <p>Bấm để tu luyện, tích lũy linh lực tăng cảnh giới!</p>
-  <h2>🔥 Linh lực: <span id="power">0</span></h2>
-  <h2 class="level-up">🧘 Cảnh giới: <span id="level">Phàm Nhân</span></h2>
-  <button onclick="train()">Tu luyện 🌀</button>
+  <div id="loginScreen">
+    <p>Nhập tên đạo hữu của bạn để bắt đầu tu luyện:</p>
+    <input type="text" id="usernameInput" placeholder="Nhập tên...">
+    <br>
+    <button onclick="startGame()">Bắt đầu tu luyện</button>
+  </div>
+
+  <div id="gameScreen" style="display:none;">
+    <h2>Xin chào, đạo hữu <span id="playerName"></span>!</h2>
+    <h3>🔥 Linh lực: <span id="power">0</span></h3>
+    <h3 class="level-up">🧘 Cảnh giới: <span id="level">Phàm Nhân</span></h3>
+    <button onclick="train()">Tu luyện 🌀</button>
+  </div>
 
   <script>
     let power = 0;
     const powerSpan = document.getElementById('power');
     const levelSpan = document.getElementById('level');
+    const playerNameSpan = document.getElementById('playerName');
     const levels = [
       { threshold: 0, name: "Phàm Nhân" },
       { threshold: 10, name: "Luyện Khí" },
@@ -67,6 +85,27 @@
           levelSpan.innerText = levels[i].name;
           break;
         }
+      }
+    }
+
+    function startGame() {
+      const username = document.getElementById("usernameInput").value.trim();
+      if (username === "") {
+        alert("Vui lòng nhập tên đạo hữu!");
+        return;
+      }
+      localStorage.setItem("tutien_player", username);
+      playerNameSpan.innerText = username;
+      document.getElementById("loginScreen").style.display = "none";
+      document.getElementById("gameScreen").style.display = "block";
+    }
+
+    window.onload = () => {
+      const savedName = localStorage.getItem("tutien_player");
+      if (savedName) {
+        playerNameSpan.innerText = savedName;
+        document.getElementById("loginScreen").style.display = "none";
+        document.getElementById("gameScreen").style.display = "block";
       }
     }
   </script>
