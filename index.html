@@ -109,5 +109,63 @@
       }
     }
   </script>
+
+<audio id="bgm" autoplay loop>
+  <source src="https://files.catbox.moe/c0i8vd.mp3" type="audio/mpeg">
+  Trình duyệt của bạn không hỗ trợ nhạc nền.
+</audio>
+<script>
+  // Bật tự động phát khi có tương tác đầu tiên
+  document.body.addEventListener("click", () => {
+    const bgm = document.getElementById("bgm");
+    if (bgm && bgm.paused) {
+      bgm.play();
+    }
+  }, { once: true });
+</script>
+
+<style>
+  #musicToggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 999;
+  }
+</style>
+
+<button id="musicToggle" onclick="toggleMusic()">🔊 Nhạc</button>
+
+<script>
+  const musicBtn = document.getElementById("musicToggle");
+  const bgm = document.getElementById("bgm");
+
+  function toggleMusic() {
+    if (bgm.paused) {
+      bgm.play();
+      musicBtn.innerText = "🔊 Nhạc";
+    } else {
+      bgm.pause();
+      musicBtn.innerText = "🔇 Tắt";
+    }
+  }
+
+  // Auto update button icon when page loads
+  window.addEventListener('load', () => {
+    if (bgm && !bgm.paused) {
+      musicBtn.innerText = "🔊 Nhạc";
+    } else {
+      musicBtn.innerText = "🔇 Tắt";
+    }
+  });
+</script>
 </body>
+
+
 </html>
