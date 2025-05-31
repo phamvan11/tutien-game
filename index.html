@@ -3,169 +3,252 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
+  <title>Tu Tiên: Môn Phái & Kỹ Năng</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Game Tu Tiên</title>
   <style>
     body {
+      margin: 0;
+      padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #111, #333);
+      background-color: #000;
       color: #fff;
+    }
+    .screen {
+      display: none;
+      padding: 20px;
       text-align: center;
-      padding: 50px;
     }
-    h1 {
-      color: #ffd700;
+    .active {
+      display: block;
     }
-    input {
+    #map {
+      background: url('https://i.imgur.com/1qOTvGJ.jpg') no-repeat center center;
+      background-size: cover;
+      height: 70vh;
+      position: relative;
+    }
+    .zone {
+      position: absolute;
+      border: 2px solid #ffd700;
+      border-radius: 10px;
       padding: 10px;
-      border-radius: 5px;
+      background-color: rgba(0,0,0,0.5);
+      cursor: pointer;
+      color: white;
+    }
+    #fightLog {
+      margin-top: 20px;
+      color: #00ffcc;
+      font-weight: bold;
+    }
+    .btn {
+      padding: 10px 20px;
+      background-color: #4CAF50;
       border: none;
+      border-radius: 8px;
+      color: white;
       font-size: 16px;
+      cursor: pointer;
       margin: 10px;
     }
-    button {
-      padding: 15px 25px;
-      font-size: 18px;
-      margin-top: 10px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
+    .skill-btn {
+      background-color: #2196F3;
     }
-    .level-up {
-      margin-top: 40px;
-      font-size: 20px;
-      color: #00e0ff;
+    .monster {
+      font-size: 32px;
+      animation: shake 0.4s ease-in-out infinite alternate;
+    }
+    @keyframes shake {
+      from { transform: translateX(-3px); }
+      to { transform: translateX(3px); }
+    }
+    select {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
     }
   </style>
+
+<audio id="swordSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_327894c3b8.mp3"></audio>
+<audio id="fireballSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_66b7b3b3f7.mp3"></audio>
+<audio id="punchSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_aaddb28945.mp3"></audio>
 </head>
 <body>
-  <h1>🌌 Tu Tiên Chi Lộ 🌌</h1>
-  <div id="loginScreen">
-    <p>Nhập tên đạo hữu của bạn để bắt đầu tu luyện:</p>
-    <input type="text" id="usernameInput" placeholder="Nhập tên...">
-    <br>
-    <button onclick="startGame()">Bắt đầu tu luyện</button>
+
+<div id="startScreen" class="screen active">
+  <h1>🌌 Tu Tiên: Lựa Chọn Môn Phái 🌌</h1>
+  <p>Nhập tên nhân vật:</p>
+  <input type="text" id="charName" placeholder="Tên đạo hữu..." /><br><br>
+  <p>Chọn môn phái:</p>
+  <select id="charClass">
+    <option value="Kiếm Tu">⚔️ Kiếm Tu</option>
+    <option value="Pháp Tu">🔮 Pháp Tu</option>
+    <option value="Thể Tu">💪 Thể Tu</option>
+  </select><br><br>
+  <button class="btn" onclick="createCharacter()">Bắt đầu</button>
+</div>
+
+<div id="mapScreen" class="screen">
+  <h2>👤 <span id="playerName"></span> - <span id="playerClass"></span></h2>
+  <div id="map">
+    <div class="zone" style="top: 20%; left: 10%;" onclick="enterZone('Rừng Linh Thú')">Rừng Linh Thú</div>
+    <div class="zone" style="top: 50%; left: 40%;" onclick="enterZone('Động Băng Tinh')">Động Băng Tinh</div>
+    <div class="zone" style="top: 70%; left: 75%;" onclick="enterZone('Đỉnh Hư Không')">Đỉnh Hư Không</div>
   </div>
 
-  <div id="gameScreen" style="display:none;">
-    <h2>Xin chào, đạo hữu <span id="playerName"></span>!</h2>
-    <h3>🔥 Linh lực: <span id="power">0</span></h3>
-    <h3 class="level-up">🧘 Cảnh giới: <span id="level">Phàm Nhân</span></h3>
-    <button onclick="train()">Tu luyện 🌀</button>
+  <div>
+    <h3>Kỹ năng môn phái:</h3>
+    <button class="btn skill-btn" onclick="useSkill()">✨ Thi triển chiêu thức</button>
   </div>
 
-  <script>
-    let power = 0;
-    const powerSpan = document.getElementById('power');
-    const levelSpan = document.getElementById('level');
-    const playerNameSpan = document.getElementById('playerName');
-    const levels = [
-      { threshold: 0, name: "Phàm Nhân" },
-      { threshold: 10, name: "Luyện Khí" },
-      { threshold: 30, name: "Trúc Cơ" },
-      { threshold: 60, name: "Kim Đan" },
-      { threshold: 100, name: "Nguyên Anh" },
-      { threshold: 150, name: "Hóa Thần" },
-      { threshold: 210, name: "Độ Kiếp" },
-      { threshold: 280, name: "Đại Thừa" },
-      { threshold: 360, name: "Phi Thăng" },
-    ];
+  
+  <div style="margin-top: 20px;">
+    <div style="width: 80%; margin: 10px auto; background: #444; border-radius: 10px; height: 20px;">
+      <div id="hpBar" style="height: 100%; background: red; width: 100%; border-radius: 10px;"></div>
+    </div>
+    <p>❤️ HP: <span id="hp">100</span>/100</p>
+    <p>⭐ EXP: <span id="exp">0</span> / <span id="expMax">100</span></p>
+  </div>
+  <div id="fightLog"></div>
 
-    function train() {
-      power += 1;
-      powerSpan.innerText = power;
-      updateLevel();
-    }
+</div>
 
-    function updateLevel() {
-      for (let i = levels.length - 1; i >= 0; i--) {
-        if (power >= levels[i].threshold) {
-          levelSpan.innerText = levels[i].name;
-          break;
-        }
-      }
-    }
-
-    function startGame() {
-      const username = document.getElementById("usernameInput").value.trim();
-      if (username === "") {
-        alert("Vui lòng nhập tên đạo hữu!");
-        return;
-      }
-      localStorage.setItem("tutien_player", username);
-      playerNameSpan.innerText = username;
-      document.getElementById("loginScreen").style.display = "none";
-      document.getElementById("gameScreen").style.display = "block";
-    }
-
-    window.onload = () => {
-      const savedName = localStorage.getItem("tutien_player");
-      if (savedName) {
-        playerNameSpan.innerText = savedName;
-        document.getElementById("loginScreen").style.display = "none";
-        document.getElementById("gameScreen").style.display = "block";
-      }
-    }
-  </script>
-
-<audio id="bgm" autoplay loop>
-  <source src="https://files.catbox.moe/c0i8vd.mp3" type="audio/mpeg">
-  Trình duyệt của bạn không hỗ trợ nhạc nền.
-</audio>
 <script>
-  // Bật tự động phát khi có tương tác đầu tiên
-  document.body.addEventListener("click", () => {
-    const bgm = document.getElementById("bgm");
-    if (bgm && bgm.paused) {
-      bgm.play();
-    }
-  }, { once: true });
-</script>
+  let currentClass = "Kiếm Tu";
 
-<style>
-  #musicToggle {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #333;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 10px 15px;
-    font-size: 14px;
-    cursor: pointer;
-    z-index: 999;
+  function createCharacter() {
+    const name = document.getElementById('charName').value.trim();
+    const chosenClass = document.getElementById('charClass').value;
+    if (!name) {
+      alert("Hãy nhập tên nhân vật!");
+      return;
+    }
+    localStorage.setItem("tu_tien_char", name);
+    localStorage.setItem("tu_tien_class", chosenClass);
+    currentClass = chosenClass;
+    document.getElementById('playerName').innerText = name;
+    document.getElementById('playerClass').innerText = chosenClass;
+    showScreen('mapScreen');
   }
-</style>
 
-<button id="musicToggle" onclick="toggleMusic()">🔊 Nhạc</button>
+  function enterZone(zoneName) {
+    const log = document.getElementById("fightLog");
+    log.innerHTML = `👾 Bạn tiến vào <b>${zoneName}</b>... Một con quái vật xuất hiện!<br><br>
+      <div class='monster'>💢 Quái vật gầm lên thách thức!</div>`;
+  }
 
-<script>
-  const musicBtn = document.getElementById("musicToggle");
-  const bgm = document.getElementById("bgm");
+  function useSkill() {
+    const log = document.getElementById("fightLog");
+    let skillEffect = "";
+    switch(currentClass) {
+      case "Kiếm Tu":
+        document.getElementById("swordSound").play();
 
-  function toggleMusic() {
-    if (bgm.paused) {
-      bgm.play();
-      musicBtn.innerText = "🔊 Nhạc";
-    } else {
-      bgm.pause();
-      musicBtn.innerText = "🔇 Tắt";
+      case "Kiếm Tu":
+        skillEffect = "🌪️ Kiếm ảnh cuồng vũ xoáy nát quái vật!";
+        break;
+      case "Pháp Tu":
+        document.getElementById("fireballSound").play();
+        skillEffect = "🔥 Hỏa cầu thiên lôi giáng xuống!";
+        break;
+      case "Thể Tu":
+        document.getElementById("punchSound").play();
+        skillEffect = "💥 Một cú đấm trời giáng nghiền nát kẻ địch!";
+        break;
+      default:
+        skillEffect = "✨ Chiêu thức bí ẩn được thi triển!";
+    }
+    log.innerHTML += `<br><br>${skillEffect}<br>🎉 Kẻ địch bị tiêu diệt!`;
+  }
+
+  function showScreen(id) {
+    document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+  }
+
+  window.onload = () => {
+    const savedName = localStorage.getItem("tu_tien_char");
+    const savedClass = localStorage.getItem("tu_tien_class");
+    if (savedName && savedClass) {
+      currentClass = savedClass;
+      document.getElementById('playerName').innerText = savedName;
+      document.getElementById('playerClass').innerText = savedClass;
+      showScreen('mapScreen');
     }
   }
 
-  // Auto update button icon when page loads
-  window.addEventListener('load', () => {
-    if (bgm && !bgm.paused) {
-      musicBtn.innerText = "🔊 Nhạc";
-    } else {
-      musicBtn.innerText = "🔇 Tắt";
+  let hp = 100;
+  let exp = 0;
+  let expMax = 100;
+
+  function updateUI() {
+    document.getElementById("hp").innerText = hp;
+    document.getElementById("exp").innerText = exp;
+    document.getElementById("expMax").innerText = expMax;
+    document.getElementById("hpBar").style.width = hp + "%";
+  }
+
+  function enterZone(zoneName) {
+    const log = document.getElementById("fightLog");
+    log.innerHTML = `👾 Bạn tiến vào <b>${zoneName}</b>... Một con quái vật xuất hiện!<br><br>
+      <div class='monster'>💢 Quái vật gầm lên thách thức!</div>`;
+    hp -= 10;
+    if (hp < 0) hp = 0;
+    updateUI();
+    if (hp === 0) {
+      log.innerHTML += "<br>☠️ Bạn đã kiệt sức! Hồi phục để tiếp tục.";
     }
-  });
+  }
+
+  function useSkill() {
+    if (hp <= 0) {
+      alert("Bạn không còn đủ HP để chiến đấu!");
+      return;
+    }
+    const log = document.getElementById("fightLog");
+    let skillEffect = "";
+    switch(currentClass) {
+      case "Kiếm Tu":
+        document.getElementById("swordSound").play();
+
+      case "Kiếm Tu":
+        skillEffect = "🌪️ Kiếm ảnh cuồng vũ xoáy nát quái vật!";
+        break;
+      case "Pháp Tu":
+        document.getElementById("fireballSound").play();
+        skillEffect = "🔥 Hỏa cầu thiên lôi giáng xuống!";
+        break;
+      case "Thể Tu":
+        document.getElementById("punchSound").play();
+        skillEffect = "💥 Một cú đấm trời giáng nghiền nát kẻ địch!";
+        break;
+      default:
+        skillEffect = "✨ Chiêu thức bí ẩn được thi triển!";
+    }
+    log.innerHTML += `<br><br>${skillEffect}<br>🎉 Kẻ địch bị tiêu diệt!`;
+
+    exp += 25;
+    if (exp >= expMax) {
+      exp = exp - expMax;
+      expMax += 25;
+      log.innerHTML += "<br>🆙 Bạn đã tăng cấp!";
+    }
+    updateUI();
+  }
+
+  window.onload = () => {
+    const savedName = localStorage.getItem("tu_tien_char");
+    const savedClass = localStorage.getItem("tu_tien_class");
+    if (savedName && savedClass) {
+      currentClass = savedClass;
+      document.getElementById('playerName').innerText = savedName;
+      document.getElementById('playerClass').innerText = savedClass;
+      showScreen('mapScreen');
+    }
+    updateUI();
+  }
 </script>
+
+
 </body>
-
-
 </html>
