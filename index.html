@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Game Tu Tiên</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #111, #333);
+      color: #fff;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      color: #ffd700;
+    }
+    button {
+      padding: 15px 25px;
+      font-size: 18px;
+      margin-top: 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .level-up {
+      margin-top: 40px;
+      font-size: 20px;
+      color: #00e0ff;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌌 Tu Tiên Chi Lộ 🌌</h1>
+  <p>Bấm để tu luyện, tích lũy linh lực tăng cảnh giới!</p>
+  <h2>🔥 Linh lực: <span id="power">0</span></h2>
+  <h2 class="level-up">🧘 Cảnh giới: <span id="level">Phàm Nhân</span></h2>
+  <button onclick="train()">Tu luyện 🌀</button>
+
+  <script>
+    let power = 0;
+    const powerSpan = document.getElementById('power');
+    const levelSpan = document.getElementById('level');
+    const levels = [
+      { threshold: 0, name: "Phàm Nhân" },
+      { threshold: 10, name: "Luyện Khí" },
+      { threshold: 30, name: "Trúc Cơ" },
+      { threshold: 60, name: "Kim Đan" },
+      { threshold: 100, name: "Nguyên Anh" },
+      { threshold: 150, name: "Hóa Thần" },
+      { threshold: 210, name: "Độ Kiếp" },
+      { threshold: 280, name: "Đại Thừa" },
+      { threshold: 360, name: "Phi Thăng" },
+    ];
+
+    function train() {
+      power += 1;
+      powerSpan.innerText = power;
+      updateLevel();
+    }
+
+    function updateLevel() {
+      for (let i = levels.length - 1; i >= 0; i--) {
+        if (power >= levels[i].threshold) {
+          levelSpan.innerText = levels[i].name;
+          break;
+        }
+      }
+    }
+  </script>
+</body>
+</html>
