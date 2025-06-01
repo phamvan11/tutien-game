@@ -83,6 +83,12 @@
       text-decoration: none;
       font-weight: bold;
     }
+    .location-img {
+      width: 300px;
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0 0 10px #00ccff;
+    }
   </style>
 </head>
 <body>
@@ -119,6 +125,7 @@
     <h2>🗺️ Bản đồ tu tiên giới</h2>
     <div class="map-box">
       <p>📍 Bạn hiện đang ở: <span id="location">Thôn Lạc Dương</span></p>
+      <img id="locationImage" class="location-img" src="https://i.ibb.co/YXMSkrs/forest.jpg" alt="Ảnh địa danh">
       <button onclick="travel()">🌲 Di chuyển đến vùng khác</button>
     </div>
     <div class="skill-box">
@@ -128,7 +135,7 @@
     </div>
     <div class="log" id="mapLog"></div>
     <div class="nav">
-      <a href="index.html">⬅️ Quay về</a>
+      <a href="javascript:history.back()">⬅️ Quay lại trang trước</a>
     </div>
   </div>  <script>
     let energy = 0;
@@ -137,6 +144,7 @@
     let currentLocation = "Thôn Lạc Dương";
     const realms = ["Phàm Thể", "Luyện Khí", "Trúc Cơ", "Kim Đan"];
     const hpBar = document.getElementById("hpBar");
+    const locationImage = document.getElementById("locationImage");
 
     function startGame() {
       const name = document.getElementById("playerName").value.trim();
@@ -183,8 +191,16 @@
     }
 
     function travel() {
-      const places = ["Rừng Bất Tận", "Hồ Linh Tuyền", "Hang Thần Mộc", "Vực Ma Diệt"];
-      currentLocation = places[Math.floor(Math.random() * places.length)];
+      const places = [
+        { name: "Rừng Bất Tận", img: "https://i.ibb.co/YXMSkrs/forest.jpg" },
+        { name: "Hồ Linh Tuyền", img: "https://i.ibb.co/GHr9Fpq/lake.jpg" },
+        { name: "Hang Thần Mộc", img: "https://i.ibb.co/x7zV9Fs/cave.jpg" },
+        { name: "Vực Ma Diệt", img: "https://i.ibb.co/5sFtP4M/cliff.jpg" }
+      ];
+      const random = places[Math.floor(Math.random() * places.length)];
+      currentLocation = random.name;
+      locationImage.src = random.img;
+      locationImage.alt = currentLocation;
       document.getElementById("location").innerText = currentLocation;
       appendToMapLog("📍 Di chuyển đến: " + currentLocation);
     }
