@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Bản Đồ Tu Tiên</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://i.imgur.com/qcNMGpn.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      overflow: hidden;
+    }
+
+    .location {
+      position: absolute;
+      cursor: pointer;
+      border: 2px solid rgba(255, 255, 255, 0.6);
+      border-radius: 12px;
+      padding: 10px;
+      background-color: rgba(0, 0, 0, 0.5);
+      transition: 0.3s;
+    }
+
+    .location:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    #info {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 10px;
+      border-radius: 10px;
+      max-width: 300px;
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Các vị trí có thể tương tác -->
+  <div class="location" style="top: 20%; left: 15%;" onclick="showInfo('Tông Môn Thái Hư', 'Nơi các đạo hữu bắt đầu tu luyện.')">🏯 Tông Môn</div>
+  <div class="location" style="top: 50%; left: 35%;" onclick="showInfo('Ma Vực', 'Khu vực nguy hiểm với yêu ma quỷ quái.')">👹 Ma Vực</div>
+  <div class="location" style="top: 70%; left: 70%;" onclick="showInfo('Yêu Giới', 'Lãnh địa của yêu thú và linh vật.')">🐉 Yêu Giới</div>
+  <div class="location" style="top: 40%; left: 80%;" onclick="showInfo('Cổ Mộ', 'Cổ mộ bỏ hoang chứa nhiều bí bảo.')">⚰️ Cổ Mộ</div>
+
+  <!-- Thông tin chi tiết -->
+  <div id="info">Click vào khu vực để xem thông tin.</div>
+
+  <!-- Nhạc nền -->
+  <audio id="bgm" autoplay loop>
+    <source src="https://files.catbox.moe/2iyr5b.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Âm thanh click -->
+  <audio id="sfx-click">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_a267cde9d7.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    function showInfo(title, description) {
+      document.getElementById('sfx-click').play();
+      document.getElementById('info').innerHTML = `<strong>${title}</strong><br>${description}`;
+    }
+  </script>
+
+</body>
+</html>
