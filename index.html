@@ -35,3 +35,171 @@
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Tu Tiên Web</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-image: url('https://i.imgur.com/YglfJtU.jpg');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+    }
+    #game, #battle, #toggle-music {
+      display: none;
+    }
+    #login {
+      margin-top: 20%;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: none;
+      background-color: #2c3e50;
+      color: white;
+      cursor: pointer;
+    }
+    .bar {
+      width: 80%;
+      height: 20px;
+      background: #ccc;
+      border-radius: 10px;
+      margin: 10px auto;
+      position: relative;
+    }
+    .bar-fill {
+      height: 100%;
+      background: #e74c3c;
+      border-radius: 10px;
+      transition: width 0.3s;
+    }
+    #monster {
+      width: 200px;
+    }
+    #toggle-music {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="login">
+    <h1>Game Tu Tiên</h1>
+    <input type="text" id="username" placeholder="Nhập tên đạo hữu">
+    <br>
+    <button onclick="startGame()">Bắt đầu tu luyện</button>
+  </div>
+
+  <div id="game">
+    <h2>Chào mừng <span id="playerName"></span></h2>
+    <p>Cảnh giới: <span id="level">Phàm Nhân</span></p>
+    <p>EXP: <span id="exp">0</span>/100</p>
+    <div class="bar"><div id="exp-bar" class="bar-fill" style="width:0%"></div></div>
+    <button onclick="train()">Tu luyện</button>
+    <button onclick="battle()">Đánh quái</button>
+  </div>
+
+  <div id="battle">
+    <h3>Đang chiến đấu với quái vật!</h3>
+    <img id="monster" src="https://i.imgur.com/8DnElOb.png" alt="Quái vật">
+    <div class="bar"><div id="monster-hp" class="bar-fill" style="width:100%"></div></div>
+    <button onclick="attack()">Tấn công</button>
+    <p id="battle-status"></p>
+    <button onclick="back()">Thoát chiến</button>
+  </div>
+
+  <button id="toggle-music" onclick="toggleMusic()">Tắt nhạc</button>
+
+  <audio id="bgm" autoplay loop>
+    <source src="https://files.catbox.moe/c0i8vd.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="sfx-attack">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_a267cde9d7.mp3" type="audio/mpeg">
+  </audio>
+
+<script>
+  let exp = 0;
+  let levelIndex = 0;
+  const levels = ["Phàm Nhân", "Luyện Khí", "Trúc Cơ", "Kim Đan", "Nguyên Anh", "Hóa Thần", "Luyện Hư", "Đại Thừa", "Độ Kiếp", "Phi Thăng"];
+  const monsterMaxHP = 100;
+  let monsterHP = monsterMaxHP;
+  let musicOn = true;
+
+  function startGame() {
+    const name = document.getElementById('username').value.trim();
+    if (!name) return alert("Nhập tên trước đã!");
+    document.getElementById('playerName').innerText = name;
+    document.getElementById('login').style.display = 'none';
+    document.getElementById('game').style.display = 'block';
+    document.getElementById('toggle-music').style.display = 'inline';
+  }
+
+  function train() {
+    const gained = Math.floor(Math.random() * 20) + 10;
+    exp += gained;
+    if (exp >= 100) {
+      exp = exp - 100;
+      levelIndex = Math.min(levelIndex + 1, levels.length - 1);
+      document.getElementById('level').innerText = levels[levelIndex];
+    }
+    document.getElementById('exp').innerText = exp;
+    document.getElementById('exp-bar').style.width = exp + '%';
+  }
+
+  function battle() {
+    document.getElementById('game').style.display = 'none';
+    document.getElementById('battle').style.display = 'block';
+    monsterHP = monsterMaxHP;
+    document.getElementById('monster-hp').style.width = '100%';
+    document.getElementById('battle-status').innerText = '';
+  }
+
+  function attack() {
+    document.getElementById('sfx-attack').play();
+    const dmg = Math.floor(Math.random() * 25) + 10;
+    monsterHP = Math.max(monsterHP - dmg, 0);
+    document.getElementById('monster-hp').style.width = (monsterHP / monsterMaxHP * 100) + '%';
+    document.getElementById('battle-status').innerText = `Gây ${dmg} sát thương!`;
+    if (monsterHP <= 0) {
+      document.getElementById('battle-status').innerText = "Bạn đã đánh bại quái vật!";
+      exp += 30;
+      if (exp >= 100) {
+        exp -= 100;
+        levelIndex = Math.min(levelIndex + 1, levels.length - 1);
+        document.getElementById('level').innerText = levels[levelIndex];
+      }
+      document.getElementById('exp').innerText = exp;
+      document.getElementById('exp-bar').style.width = exp + '%';
+    }
+  }
+
+  function back() {
+    document.getElementById('battle').style.display = 'none';
+    document.getElementById('game').style.display = 'block';
+  }
+
+  function toggleMusic() {
+    const bgm = document.getElementById('bgm');
+    musicOn = !musicOn;
+    if (musicOn) {
+      bgm.play();
+      document.getElementById('toggle-music').innerText = 'Tắt nhạc';
+    } else {
+      bgm.pause();
+      document.getElementById('toggle-music').innerText = 'Bật nhạc';
+    }
+  }
+</script>
+
+</body>
+</html>
