@@ -2,222 +2,92 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tu Tiên Online - Đăng Nhập</title>
+  <title>Tu Tiên - Đăng Ký Nhân Vật</title>
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom, #1b1b1b, #2f2f2f);
+      background: url('https://i.ibb.co/tZWvBR3/bg-tu-tien.jpg') no-repeat center center fixed;
+      background-size: cover;
       color: white;
       text-align: center;
       padding: 40px 20px;
     }
-    h1, h2, h3 {
-      margin: 0 0 15px;
+    .form-container {
+      background-color: rgba(0, 0, 0, 0.75);
+      padding: 25px;
+      max-width: 400px;
+      margin: 60px auto;
+      border-radius: 15px;
+      box-shadow: 0 0 12px #00ffff;
     }
-    input, button {
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 6px;
-      border: none;
-      margin-top: 10px;
+    h1 {
+      margin-bottom: 20px;
+      color: #ffd700;
     }
     input {
-      width: 80%;
-      max-width: 300px;
+      width: 90%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
     }
     button {
-      background-color: #4CAF50;
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      background: linear-gradient(to right, #ff6600, #ff3300);
       color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
       cursor: pointer;
     }
-    #gameScreen, #missionScreen, #mapScreen {
-      display: none;
+    .giftcode {
       margin-top: 30px;
-    }
-    .npc img {
-      width: 140px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px #00ffcc;
-    }
-    .mission-box, .map-box, .skill-box {
-      background-color: #2b2b2b;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 20px;
+      font-size: 20px;
+      background: #222;
       display: inline-block;
-      text-align: left;
-      max-width: 90%;
-    }
-    .log {
-      margin-top: 20px;
-      padding: 10px;
-      background-color: #444;
+      padding: 10px 20px;
       border-radius: 10px;
-      max-height: 150px;
-      overflow-y: auto;
-      text-align: left;
+      box-shadow: 0 0 10px #ff00cc;
     }
-    .hp-bar {
-      background: #333;
-      border-radius: 10px;
-      overflow: hidden;
-      margin-top: 10px;
-      height: 20px;
-      max-width: 300px;
-      margin-left: auto;
-      margin-right: auto;
+    .giftcode strong {
+      font-size: 24px;
+      color: gold;
     }
-    .hp-fill {
-      height: 100%;
-      width: 100%;
-      background: linear-gradient(to right, red, darkred);
-      transition: width 0.4s;
+    .banner {
+      margin-bottom: 20px;
     }
-    .nav {
-      margin-top: 20px;
-    }
-    .nav a {
-      margin: 0 10px;
-      color: #00ffcc;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .location-img {
-      width: 300px;
-      border-radius: 10px;
-      margin-top: 10px;
-      box-shadow: 0 0 10px #00ccff;
+    .banner img {
+      width: 120px;
     }
   </style>
 </head>
 <body>
-  <h1>🌌 Tu Tiên Mobile</h1>
-  <div id="loginScreen">
-    <p>Nhập tên đạo hữu của bạn:</p>
-    <input type="text" id="playerName" placeholder="Ví dụ: Lâm Vô Nhàn" />
-    <br />
-    <button onclick="startGame()">Đăng nhập</button>
-  </div>  <div id="gameScreen">
-    <h2>👤 Chào mừng đạo hữu <span id="displayName"></span>!</h2>
-    <div class="npc">
-      <p>👴 <strong>NPC Tân Thủ:</strong><br/>Chào mừng đến với thế giới tu tiên. Hãy bắt đầu hành trình đột phá!</p>
-      <img src="https://i.ibb.co/5jZKcVW/npc-tutien.png" alt="NPC tân thủ">
-    </div>
-    <button onclick="showMission()">📜 Nhận nhiệm vụ đầu tiên</button>
-    <div class="nav">
-      <a href="map.html">🗺️ Bản đồ</a>
-      <a href="skills.html">🎯 Kỹ năng</a>
-      <a href="bag.html">📦 Túi đồ</a>
-      <a href="npc.html">🧓 NPC</a>
-    </div>
-  </div>  <div id="missionScreen">
-    <h2>Nhiệm vụ: Đột Phá Cảnh Giới</h2>
-    <div class="mission-box">
-      <p>🌟 <strong>Yêu cầu:</strong> Tu luyện đủ linh lực để đột phá từ Phàm Thể lên Luyện Khí.</p>
-      <p>🎯 <strong>Mục tiêu:</strong> Tích lũy ≥ 30 linh lực → đột phá!</p>
-      <button onclick="cultivate()">🧘 Tu luyện</button>
-      <button onclick="breakThrough()">⚡ Đột phá</button>
-    </div>
-    <div class="hp-bar"><div class="hp-fill" id="hpBar"></div></div>
-    <div class="log" id="log"></div>
-  </div>  <div id="mapScreen">
-    <h2>🗺️ Bản đồ tu tiên giới</h2>
-    <div class="map-box">
-      <p>📍 Bạn hiện đang ở: <span id="location">Thôn Lạc Dương</span></p>
-      <img id="locationImage" class="location-img" src="https://i.ibb.co/YXMSkrs/forest.jpg" alt="Ảnh địa danh">
-      <button onclick="travel()">🌲 Di chuyển đến vùng khác</button>
-    </div>
-    <div class="skill-box">
-      <h3>🎯 Kỹ năng:</h3>
-      <button onclick="useSkill()">🔥 Kích Hoả Công</button>
-      <button onclick="useSkill()">💨 Phong Bộ Thân</button>
-    </div>
-    <div class="log" id="mapLog"></div>
-    <div class="nav">
-      <a href="javascript:history.back()">⬅️ Quay lại trang trước</a>
-    </div>
+  <div class="banner">
+    <img src="https://i.ibb.co/kx3CTnB/logo-tutien.png" alt="Logo Tu Tiên">
+  </div>
+  <div class="form-container">
+    <h1>ĐĂNG KÝ NHÂN VẬT</h1>
+    <input type="text" placeholder="Tên đăng nhập" id="username">
+    <input type="password" placeholder="Mật khẩu" id="password">
+    <input type="password" placeholder="Nhập lại mật khẩu" id="confirm">
+    <button onclick="register()">ĐĂNG KÝ NGAY</button>
+    <p style="margin:15px 0;">Hoặc</p>
+    <button style="background:#0066cc">Đăng nhập qua Google</button>
+  </div>  <div class="giftcode">
+    🎁 Giftcode dành riêng cho bạn: <br><strong>VKTG9999</strong>
   </div>  <script>
-    let energy = 0;
-    let level = 0;
-    let hp = 100;
-    let currentLocation = "Thôn Lạc Dương";
-    const realms = ["Phàm Thể", "Luyện Khí", "Trúc Cơ", "Kim Đan"];
-    const hpBar = document.getElementById("hpBar");
-    const locationImage = document.getElementById("locationImage");
-
-    function startGame() {
-      const name = document.getElementById("playerName").value.trim();
-      if (!name) {
-        alert("Vui lòng nhập tên nhân vật.");
-        return;
-      }
-      document.getElementById("displayName").innerText = name;
-      document.getElementById("loginScreen").style.display = "none";
-      document.getElementById("gameScreen").style.display = "block";
-    }
-
-    function showMission() {
-      document.getElementById("gameScreen").style.display = "none";
-      document.getElementById("missionScreen").style.display = "block";
-      logAction("📜 Bạn đã nhận nhiệm vụ đầu tiên: Đột phá cảnh giới!");
-    }
-
-    function cultivate() {
-      const gain = Math.floor(Math.random() * 10 + 1);
-      energy += gain;
-      logAction("🧘 Tu luyện thành công! Nhận được +" + gain + " linh lực (Tổng: " + energy + ")");
-    }
-
-    function breakThrough() {
-      if (energy >= 30 && level === 0) {
-        level++;
-        energy = 0;
-        logAction("⚡ Bạn đã đột phá lên cảnh giới: " + realms[level]);
-        document.getElementById("missionScreen").style.display = "none";
-        document.getElementById("mapScreen").style.display = "block";
-      } else if (level > 0) {
-        logAction("🚫 Bạn cần nhiệm vụ tiếp theo để đột phá thêm.");
-      } else {
-        logAction("⚠️ Chưa đủ linh lực để đột phá! (Cần ≥ 30)");
-      }
-    }
-
-    function logAction(text) {
-      const box = document.getElementById("log");
-      const p = document.createElement("p");
-      p.textContent = text;
-      box.prepend(p);
-    }
-
-    function travel() {
-      const places = [
-        { name: "Rừng Bất Tận", img: "https://i.ibb.co/YXMSkrs/forest.jpg" },
-        { name: "Hồ Linh Tuyền", img: "https://i.ibb.co/GHr9Fpq/lake.jpg" },
-        { name: "Hang Thần Mộc", img: "https://i.ibb.co/x7zV9Fs/cave.jpg" },
-        { name: "Vực Ma Diệt", img: "https://i.ibb.co/5sFtP4M/cliff.jpg" }
-      ];
-      const random = places[Math.floor(Math.random() * places.length)];
-      currentLocation = random.name;
-      locationImage.src = random.img;
-      locationImage.alt = currentLocation;
-      document.getElementById("location").innerText = currentLocation;
-      appendToMapLog("📍 Di chuyển đến: " + currentLocation);
-    }
-
-    function useSkill() {
-      const damage = Math.floor(Math.random() * 20 + 5);
-      hp -= damage;
-      if (hp < 0) hp = 0;
-      hpBar.style.width = hp + "%";
-      appendToMapLog("🔥 Thi triển kỹ năng gây sát thương và tiêu hao khí huyết: -" + damage);
-    }
-
-    function appendToMapLog(msg) {
-      const box = document.getElementById("mapLog");
-      const p = document.createElement("p");
-      p.textContent = msg;
-      box.prepend(p);
+    function register() {
+      const user = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value;
+      const confirm = document.getElementById('confirm').value;
+      if (!user || !pass || !confirm) return alert("Vui lòng điền đầy đủ thông tin!");
+      if (pass !== confirm) return alert("Mật khẩu nhập lại không khớp!");
+      alert("📝 Đăng ký thành công!\nChào mừng đạo hữu " + user);
+      // Redirect hoặc lưu trạng thái vào localStorage nếu cần
     }
   </script></body>
 </html>
