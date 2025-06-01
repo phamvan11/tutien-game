@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Game Tu Tiên</title>
+</head>
+<body>
+  <h1>Game Tu Tiên - Đột Phá Cảnh Giới</h1>
+  <h2>Cảnh giới: <span id="realm">Phàm Nhân</span></h2>
+  <img id="player-avatar" src="assets/images/phamnhan.png" width="150" alt="Nhân vật" />
+  <br><br>
+  <button onclick="cultivate()">Tu luyện</button>
+
+  <audio id="upgrade-sound" src="assets/sounds/upgrade.mp3" preload="auto"></audio>
+
+  <script>
+    const realms = ["Phàm Nhân", "Luyện Khí", "Trúc Cơ", "Kim Đan", "Nguyên Anh", "Hóa Thần"];
+    let currentRealm = 0;
+
+    function cultivate() {
+      if (currentRealm < realms.length - 1) {
+        currentRealm++;
+        document.getElementById("realm").innerText = realms[currentRealm];
+
+        // Phát âm thanh nâng cấp
+        document.getElementById("upgrade-sound").play();
+
+        // Đổi ảnh nhân vật
+        const imageName = realms[currentRealm].toLowerCase().replace(" ", "") + ".png";
+        document.getElementById("player-avatar").src = "assets/images/" + imageName;
+      } else {
+        alert("Bạn đã đạt cảnh giới cao nhất!");
+      }
+    }
+  </script>
+</body>
+</html>
