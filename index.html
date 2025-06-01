@@ -1,6 +1,151 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tu Tiên Mobile</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    header {
+      background: #1f1f1f;
+      padding: 15px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .character img {
+      width: 140px;
+      border-radius: 10px;
+      border: 2px solid #fff;
+      box-shadow: 0 0 12px #00f0ff;
+      margin-top: 10px;
+    }
+    .realm {
+      margin: 20px 0;
+      font-size: 20px;
+    }
+    button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      width: 80%;
+      max-width: 300px;
+      transition: 0.2s;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    .map img {
+      margin-top: 20px;
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 0 8px #888;
+    }
+    .log {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #333;
+      border-radius: 8px;
+      max-height: 150px;
+      overflow-y: auto;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🌌 Tu Tiên Mobile: Đột Phá Cảnh Giới</h1>
+</header>
+
+<div class="character">
+  <h2>Nhân vật: Lâm Vô Nhàn</h2>
+  <img src="https://i.ibb.co/XC1V6hf/hero-tu-tien.png" alt="Hero tu tiên">
+</div>
+
+<div class="realm" id="realm">Cảnh giới: Phàm Thể</div>
+
+<button onclick="breakThrough()">⚡ Đột phá</button>
+<button onclick="cultivate()">🧘 Tu luyện</button>
+<button onclick="fightMonster()">🗡️ Đánh quái</button>
+<button onclick="moveLocation()">🗺️ Di chuyển</button>
+
+<div class="map">
+  <h3>Bản đồ tu tiên giới</h3>
+  <img src="https://i.ibb.co/S3GnNLt/map-tutien.jpg" alt="Bản đồ Tu Tiên">
+</div>
+
+<audio controls loop>
+  <source src="https://cdn.pixabay.com/audio/2023/03/28/audio_1449e7f9c3.mp3" type="audio/mpeg">
+  Trình duyệt không hỗ trợ phát nhạc.
+</audio>
+
+<div class="log" id="log"></div>
+
+<script>
+  const realms = [
+    "Phàm Thể", "Luyện Khí", "Trúc Cơ", "Kim Đan", "Nguyên Anh",
+    "Hóa Thần", "Luyện Hư", "Hợp Thể", "Đại Thừa", "Độ Kiếp", "Phi Thăng"
+  ];
+  let level = 0;
+  const logBox = document.getElementById("log");
+
+  function logAction(text) {
+    const p = document.createElement("p");
+    p.textContent = text;
+    logBox.prepend(p);
+  }
+
+  function breakThrough() {
+    if (level < realms.length - 1) {
+      level++;
+      document.getElementById("realm").innerText = "Cảnh giới: " + realms[level];
+      logAction("🔥 Bạn đã đột phá lên cảnh giới: " + realms[level]);
+    } else {
+      logAction("✨ Bạn đã đạt đến đỉnh cao Phi Thăng!");
+    }
+  }
+
+  function cultivate() {
+    const energy = Math.floor(Math.random() * 10 + 1);
+    logAction("🧘‍♂️ Bạn tu luyện và nhận được +" + energy + " linh lực.");
+  }
+
+  function fightMonster() {
+    const success = Math.random() < 0.7;
+    if (success) {
+      logAction("🗡️ Bạn đánh bại quái vật và nhận được 1 điểm kinh nghiệm.");
+    } else {
+      logAction("⚠️ Bạn bị thương khi đánh quái, hãy tu luyện thêm!");
+    }
+  }
+
+  function moveLocation() {
+    const locations = [
+      "Thôn Lạc Dương", "Rừng Bất Tận", "Hồ Linh Tuyền",
+      "Hang Thần Mộc", "Vực Ma Diệt"
+    ];
+    const loc = locations[Math.floor(Math.random() * locations.length)];
+    logAction("📍 Bạn đã di chuyển đến: " + loc);
+  }
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="vi">
+<head>
   <meta charset="UTF-8">
   <title>Tu Tiên: Đột Phá Cảnh Giới</title>
   <style>
