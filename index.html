@@ -74,9 +74,19 @@
       background: linear-gradient(to right, red, darkred);
       transition: width 0.4s;
     }
+    .nav {
+      margin-top: 20px;
+    }
+    .nav a {
+      margin: 0 10px;
+      color: #00ffcc;
+      text-decoration: none;
+      font-weight: bold;
+    }
   </style>
 </head>
-<body>  <h1>🌌 Tu Tiên Mobile</h1>
+<body>
+  <h1>🌌 Tu Tiên Mobile</h1>
   <div id="loginScreen">
     <p>Nhập tên đạo hữu của bạn:</p>
     <input type="text" id="playerName" placeholder="Ví dụ: Lâm Vô Nhàn" />
@@ -89,6 +99,12 @@
       <img src="https://i.ibb.co/5jZKcVW/npc-tutien.png" alt="NPC tân thủ">
     </div>
     <button onclick="showMission()">📜 Nhận nhiệm vụ đầu tiên</button>
+    <div class="nav">
+      <a href="map.html">🗺️ Bản đồ</a>
+      <a href="skills.html">🎯 Kỹ năng</a>
+      <a href="bag.html">📦 Túi đồ</a>
+      <a href="npc.html">🧓 NPC</a>
+    </div>
   </div>  <div id="missionScreen">
     <h2>Nhiệm vụ: Đột Phá Cảnh Giới</h2>
     <div class="mission-box">
@@ -111,6 +127,9 @@
       <button onclick="useSkill()">💨 Phong Bộ Thân</button>
     </div>
     <div class="log" id="mapLog"></div>
+    <div class="nav">
+      <a href="index.html">⬅️ Quay về</a>
+    </div>
   </div>  <script>
     let energy = 0;
     let level = 0;
