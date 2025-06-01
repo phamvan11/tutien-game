@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Tu Tiên: Đột Phá Cảnh Giới</title>
+  <style>
+    body {
+      background-image: url('https://images.unsplash.com/photo-1526726538690-5cbf956ae2fd'); /* ảnh nền núi */
+      background-size: cover;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      text-align: center;
+      padding: 30px;
+    }
+    .character {
+      margin-top: 20px;
+    }
+    .character img {
+      border-radius: 12px;
+      width: 200px;
+      height: auto;
+      box-shadow: 0 0 20px #000;
+    }
+    .realm {
+      font-size: 30px;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      background-color: #5e3cff;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #3e26d9;
+    }
+    .map {
+      margin-top: 40px;
+    }
+    .map img {
+      max-width: 100%;
+      border: 3px solid white;
+      border-radius: 10px;
+    }
+    audio {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌌 Tu Tiên: Đột Phá Cảnh Giới</h1>
+
+  <div class="character">
+    <h2>Nhân vật của bạn: Lâm Vô Nhàn</h2>
+    <img src="https://i.imgur.com/yW5rW8z.png" alt="Nhân vật tu tiên" />
+  </div>
+
+  <div class="realm" id="realm">Phàm Thể</div>
+  <button onclick="breakThrough()">⚡ Đột Phá</button>
+
+  <div class="map">
+    <h2>Bản đồ tu tiên giới</h2>
+    <img src="https://i.imgur.com/q2L4KjB.jpg" alt="Bản đồ Tu Tiên" />
+  </div>
+
+  <audio controls autoplay loop>
+    <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Scott_Holmes/Documentary__TV_series/Scott_Holmes_-_07_-_The_Road_Home.mp3" type="audio/mpeg">
+    Trình duyệt không hỗ trợ nhạc.
+  </audio>
+
+  <script>
+    const realms = [
+      "Phàm Thể", "Luyện Khí", "Trúc Cơ", "Kim Đan", "Nguyên Anh",
+      "Hóa Thần", "Luyện Hư", "Hợp Thể", "Đại Thừa", "Độ Kiếp", "Phi Thăng"
+    ];
+    let level = 0;
+
+    function breakThrough() {
+      if (level < realms.length - 1) {
+        level++;
+        document.getElementById("realm").innerText = realms[level];
+      } else {
+        alert("🎉 Bạn đã Phi Thăng thành Tiên rồi!");
+      }
+    }
+  </script>
+</body>
+</html>
