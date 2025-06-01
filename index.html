@@ -1,378 +1,188 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tu Tiên Mobile</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #121212;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-    header {
-      background: #1f1f1f;
-      padding: 15px;
-    }
-    h1 {
-      margin: 0;
-      font-size: 24px;
-    }
-    .character img {
-      width: 140px;
-      border-radius: 10px;
-      border: 2px solid #fff;
-      box-shadow: 0 0 12px #00f0ff;
-      margin-top: 10px;
-    }
-    .realm {
-      margin: 20px 0;
-      font-size: 20px;
-    }
-    button {
-      display: block;
-      margin: 10px auto;
-      padding: 10px 20px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      width: 80%;
-      max-width: 300px;
-      transition: 0.2s;
-    }
-    button:hover {
-      opacity: 0.9;
-    }
-    .map img {
-      margin-top: 20px;
-      width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 0 8px #888;
-    }
-    .log {
-      margin-top: 20px;
-      padding: 10px;
-      background-color: #333;
-      border-radius: 8px;
-      max-height: 150px;
-      overflow-y: auto;
-      text-align: left;
-    }
-  </style>
-</head>
-<body>
-
-<header>
-  <h1>🌌 Tu Tiên Mobile: Đột Phá Cảnh Giới</h1>
-</header>
-
-<div class="character">
-  <h2>Nhân vật: Lâm Vô Nhàn</h2>
-  <img src="https://i.ibb.co/XC1V6hf/hero-tu-tien.png" alt="Hero tu tiên">
-</div>
-
-<div class="realm" id="realm">Cảnh giới: Phàm Thể</div>
-
-<button onclick="breakThrough()">⚡ Đột phá</button>
-<button onclick="cultivate()">🧘 Tu luyện</button>
-<button onclick="fightMonster()">🗡️ Đánh quái</button>
-<button onclick="moveLocation()">🗺️ Di chuyển</button>
-
-<div class="map">
-  <h3>Bản đồ tu tiên giới</h3>
-  <img src="https://i.ibb.co/S3GnNLt/map-tutien.jpg" alt="Bản đồ Tu Tiên">
-</div>
-
-<audio controls loop>
-  <source src="https://cdn.pixabay.com/audio/2023/03/28/audio_1449e7f9c3.mp3" type="audio/mpeg">
-  Trình duyệt không hỗ trợ phát nhạc.
-</audio>
-
-<div class="log" id="log"></div>
-
-<script>
-  const realms = [
-    "Phàm Thể", "Luyện Khí", "Trúc Cơ", "Kim Đan", "Nguyên Anh",
-    "Hóa Thần", "Luyện Hư", "Hợp Thể", "Đại Thừa", "Độ Kiếp", "Phi Thăng"
-  ];
-  let level = 0;
-  const logBox = document.getElementById("log");
-
-  function logAction(text) {
-    const p = document.createElement("p");
-    p.textContent = text;
-    logBox.prepend(p);
-  }
-
-  function breakThrough() {
-    if (level < realms.length - 1) {
-      level++;
-      document.getElementById("realm").innerText = "Cảnh giới: " + realms[level];
-      logAction("🔥 Bạn đã đột phá lên cảnh giới: " + realms[level]);
-    } else {
-      logAction("✨ Bạn đã đạt đến đỉnh cao Phi Thăng!");
-    }
-  }
-
-  function cultivate() {
-    const energy = Math.floor(Math.random() * 10 + 1);
-    logAction("🧘‍♂️ Bạn tu luyện và nhận được +" + energy + " linh lực.");
-  }
-
-  function fightMonster() {
-    const success = Math.random() < 0.7;
-    if (success) {
-      logAction("🗡️ Bạn đánh bại quái vật và nhận được 1 điểm kinh nghiệm.");
-    } else {
-      logAction("⚠️ Bạn bị thương khi đánh quái, hãy tu luyện thêm!");
-    }
-  }
-
-  function moveLocation() {
-    const locations = [
-      "Thôn Lạc Dương", "Rừng Bất Tận", "Hồ Linh Tuyền",
-      "Hang Thần Mộc", "Vực Ma Diệt"
-    ];
-    const loc = locations[Math.floor(Math.random() * locations.length)];
-    logAction("📍 Bạn đã di chuyển đến: " + loc);
-  }
-</script>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <title>Tu Tiên: Đột Phá Cảnh Giới</title>
-  <style>
-    body {
-      background-image: url('https://images.unsplash.com/photo-1526726538690-5cbf956ae2fd'); /* ảnh nền núi */
-      background-size: cover;
-      font-family: 'Segoe UI', sans-serif;
-      color: white;
-      text-align: center;
-      padding: 30px;
-    }
-    .character {
-      margin-top: 20px;
-    }
-    .character img {
-      border-radius: 12px;
-      width: 200px;
-      height: auto;
-      box-shadow: 0 0 20px #000;
-    }
-    .realm {
-      font-size: 30px;
-      font-weight: bold;
-      margin: 20px 0;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 18px;
-      border: none;
-      border-radius: 10px;
-      background-color: #5e3cff;
-      color: white;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #3e26d9;
-    }
-    .map {
-      margin-top: 40px;
-    }
-    .map img {
-      max-width: 100%;
-      border: 3px solid white;
-      border-radius: 10px;
-    }
-    audio {
-      margin-top: 20px;
-    }
-  </style>
-</head>
-<body>
-  <h1>🌌 Tu Tiên: Đột Phá Cảnh Giới</h1>
-
-  <div class="character">
-    <h2>Nhân vật của bạn: Lâm Vô Nhàn</h2>
-    <img src="https://i.imgur.com/yW5rW8z.png" alt="Nhân vật tu tiên" />
-  </div>
-
-  <div class="realm" id="realm">Phàm Thể</div>
-  <button onclick="breakThrough()">⚡ Đột Phá</button>
-
-  <div class="map">
-    <h2>Bản đồ tu tiên giới</h2>
-    <img src="https://i.imgur.com/q2L4KjB.jpg" alt="Bản đồ Tu Tiên" />
-  </div>
-
-  <audio controls autoplay loop>
-    <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Scott_Holmes/Documentary__TV_series/Scott_Holmes_-_07_-_The_Road_Home.mp3" type="audio/mpeg">
-    Trình duyệt không hỗ trợ nhạc.
-  </audio>
-
-  <script>
-    const realms = [
-      "Phàm Thể", "Luyện Khí", "Trúc Cơ", "Kim Đan", "Nguyên Anh",
-      "Hóa Thần", "Luyện Hư", "Hợp Thể", "Đại Thừa", "Độ Kiếp", "Phi Thăng"
-    ];
-    let level = 0;
-
-    function breakThrough() {
-      if (level < realms.length - 1) {
-        level++;
-        document.getElementById("realm").innerText = realms[level];
-      } else {
-        alert("🎉 Bạn đã Phi Thăng thành Tiên rồi!");
-      }
-    }
-  </script>
-</body>
-</html>
 <!DOCTYPE html><html lang="vi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tu Tiên Mobile</title>
+  <title>Tu Tiên Online - Đăng Nhập</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #121212;
-      color: #fff;
-      text-align: center;
-    }
-    header {
-      background-color: #1e1e1e;
-      padding: 15px;
-    }
-    h1 {
-      font-size: 1.8em;
-      margin: 0;
-    }
-    .game-container {
-      padding: 20px;
-    }
-    .character img {
-      width: 150px;
-      border-radius: 8px;
-      border: 2px solid #fff;
-      box-shadow: 0 0 12px #00f0ff;
-    }
-    .realm {
-      font-size: 20px;
-      margin: 15px 0;
-    }
-    .buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      align-items: center;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      border: none;
-      border-radius: 6px;
-      background-color: #4CAF50;
+      background: linear-gradient(to bottom, #1b1b1b, #2f2f2f);
       color: white;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    h1, h2, h3 {
+      margin: 0 0 15px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: none;
+      margin-top: 10px;
+    }
+    input {
       width: 80%;
       max-width: 300px;
     }
-    .map img {
-      width: 100%;
+    button {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+    #gameScreen, #missionScreen, #mapScreen {
+      display: none;
+      margin-top: 30px;
+    }
+    .npc img {
+      width: 140px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #00ffcc;
+    }
+    .mission-box, .map-box, .skill-box {
+      background-color: #2b2b2b;
+      padding: 15px;
       border-radius: 10px;
       margin-top: 20px;
-      box-shadow: 0 0 8px #999;
+      display: inline-block;
+      text-align: left;
+      max-width: 90%;
     }
     .log {
-      background-color: #333;
-      margin-top: 15px;
+      margin-top: 20px;
       padding: 10px;
-      border-radius: 8px;
+      background-color: #444;
+      border-radius: 10px;
       max-height: 150px;
       overflow-y: auto;
+      text-align: left;
     }
-    audio {
-      margin-top: 20px;
+    .hp-bar {
+      background: #333;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 10px;
+      height: 20px;
+      max-width: 300px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hp-fill {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(to right, red, darkred);
+      transition: width 0.4s;
     }
   </style>
 </head>
-<body>
-  <header>
-    <h1>🌌 Tu Tiên Mobile: Đột Phá Cảnh Giới</h1>
-  </header>
-  <div class="game-container">
-    <div class="character">
-      <h2>Nhân vật: Lâm Vô Nhàn</h2>
-      <img src="https://i.imgur.com/LbSoNTi.png" alt="Hero nhân vật tu tiên">
-    </div><div class="realm" id="realm">Cảnh giới: Phàm Thể</div>
-
-<div class="buttons">
-  <button onclick="breakThrough()">⚡ Đột phá</button>
-  <button onclick="cultivate()">🧘‍♂️ Tu luyện</button>
-  <button onclick="fightMonster()">🗡️ Đánh quái</button>
-  <button onclick="moveLocation()">🗺️ Di chuyển</button>
-</div>
-
-<div class="map">
-  <h3>Bản đồ tu tiên giới</h3>
-  <img src="https://i.imgur.com/W0bHpSm.jpg" alt="Bản đồ Tu Tiên">
-</div>
-
-<audio controls autoplay loop>
-  <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Scott_Holmes/Documentary__TV_series/Scott_Holmes_-_07_-_The_Road_Home.mp3" type="audio/mpeg">
-  Trình duyệt không hỗ trợ phát nhạc.
-</audio>
-
-<div class="log" id="log"></div>
-
+<body>  <h1>🌌 Tu Tiên Mobile</h1>
+  <div id="loginScreen">
+    <p>Nhập tên đạo hữu của bạn:</p>
+    <input type="text" id="playerName" placeholder="Ví dụ: Lâm Vô Nhàn" />
+    <br />
+    <button onclick="startGame()">Đăng nhập</button>
+  </div>  <div id="gameScreen">
+    <h2>👤 Chào mừng đạo hữu <span id="displayName"></span>!</h2>
+    <div class="npc">
+      <p>👴 <strong>NPC Tân Thủ:</strong><br/>Chào mừng đến với thế giới tu tiên. Hãy bắt đầu hành trình đột phá!</p>
+      <img src="https://i.ibb.co/5jZKcVW/npc-tutien.png" alt="NPC tân thủ">
+    </div>
+    <button onclick="showMission()">📜 Nhận nhiệm vụ đầu tiên</button>
+  </div>  <div id="missionScreen">
+    <h2>Nhiệm vụ: Đột Phá Cảnh Giới</h2>
+    <div class="mission-box">
+      <p>🌟 <strong>Yêu cầu:</strong> Tu luyện đủ linh lực để đột phá từ Phàm Thể lên Luyện Khí.</p>
+      <p>🎯 <strong>Mục tiêu:</strong> Tích lũy ≥ 30 linh lực → đột phá!</p>
+      <button onclick="cultivate()">🧘 Tu luyện</button>
+      <button onclick="breakThrough()">⚡ Đột phá</button>
+    </div>
+    <div class="hp-bar"><div class="hp-fill" id="hpBar"></div></div>
+    <div class="log" id="log"></div>
+  </div>  <div id="mapScreen">
+    <h2>🗺️ Bản đồ tu tiên giới</h2>
+    <div class="map-box">
+      <p>📍 Bạn hiện đang ở: <span id="location">Thôn Lạc Dương</span></p>
+      <button onclick="travel()">🌲 Di chuyển đến vùng khác</button>
+    </div>
+    <div class="skill-box">
+      <h3>🎯 Kỹ năng:</h3>
+      <button onclick="useSkill()">🔥 Kích Hoả Công</button>
+      <button onclick="useSkill()">💨 Phong Bộ Thân</button>
+    </div>
+    <div class="log" id="mapLog"></div>
   </div>  <script>
-    const realms = ["Phàm Thể", "Luyện Khí", "Trúc Cơ", "Kim Đan", "Nguyên Anh", "Hóa Thần", "Luyện Hư", "Hợp Thể", "Đại Thừa", "Độ Kiếp", "Phi Thăng"];
+    let energy = 0;
     let level = 0;
-    const logBox = document.getElementById("log");
+    let hp = 100;
+    let currentLocation = "Thôn Lạc Dương";
+    const realms = ["Phàm Thể", "Luyện Khí", "Trúc Cơ", "Kim Đan"];
+    const hpBar = document.getElementById("hpBar");
 
-    function logAction(text) {
-      const p = document.createElement("p");
-      p.textContent = text;
-      logBox.prepend(p);
+    function startGame() {
+      const name = document.getElementById("playerName").value.trim();
+      if (!name) {
+        alert("Vui lòng nhập tên nhân vật.");
+        return;
+      }
+      document.getElementById("displayName").innerText = name;
+      document.getElementById("loginScreen").style.display = "none";
+      document.getElementById("gameScreen").style.display = "block";
     }
 
-    function breakThrough() {
-      if (level < realms.length - 1) {
-        level++;
-        document.getElementById("realm").innerText = "Cảnh giới: " + realms[level];
-        logAction("🔥 Bạn đã đột phá lên cảnh giới: " + realms[level]);
-      } else {
-        logAction("✨ Bạn đã đạt đến đỉnh cao Phi Thăng!");
-      }
+    function showMission() {
+      document.getElementById("gameScreen").style.display = "none";
+      document.getElementById("missionScreen").style.display = "block";
+      logAction("📜 Bạn đã nhận nhiệm vụ đầu tiên: Đột phá cảnh giới!");
     }
 
     function cultivate() {
-      const energy = Math.floor(Math.random() * 10 + 1);
-      logAction("🧘‍♂️ Bạn tu luyện và nhận được +" + energy + " linh lực.");
+      const gain = Math.floor(Math.random() * 10 + 1);
+      energy += gain;
+      logAction("🧘 Tu luyện thành công! Nhận được +" + gain + " linh lực (Tổng: " + energy + ")");
     }
 
-    function fightMonster() {
-      const success = Math.random() < 0.7;
-      if (success) {
-        logAction("🗡️ Bạn đánh bại quái vật và nhận được 1 điểm kinh nghiệm.");
+    function breakThrough() {
+      if (energy >= 30 && level === 0) {
+        level++;
+        energy = 0;
+        logAction("⚡ Bạn đã đột phá lên cảnh giới: " + realms[level]);
+        document.getElementById("missionScreen").style.display = "none";
+        document.getElementById("mapScreen").style.display = "block";
+      } else if (level > 0) {
+        logAction("🚫 Bạn cần nhiệm vụ tiếp theo để đột phá thêm.");
       } else {
-        logAction("⚠️ Bạn bị thương khi đánh quái, hãy tu luyện thêm!");
+        logAction("⚠️ Chưa đủ linh lực để đột phá! (Cần ≥ 30)");
       }
     }
 
-    function moveLocation() {
-      const locations = ["Thôn Lạc Dương", "Rừng Bất Tận", "Hồ Linh Tuyền", "Hang Thần Mộc", "Vực Ma Diệt"];
-      const loc = locations[Math.floor(Math.random() * locations.length)];
-      logAction("📍 Bạn đã di chuyển đến: " + loc);
+    function logAction(text) {
+      const box = document.getElementById("log");
+      const p = document.createElement("p");
+      p.textContent = text;
+      box.prepend(p);
+    }
+
+    function travel() {
+      const places = ["Rừng Bất Tận", "Hồ Linh Tuyền", "Hang Thần Mộc", "Vực Ma Diệt"];
+      currentLocation = places[Math.floor(Math.random() * places.length)];
+      document.getElementById("location").innerText = currentLocation;
+      appendToMapLog("📍 Di chuyển đến: " + currentLocation);
+    }
+
+    function useSkill() {
+      const damage = Math.floor(Math.random() * 20 + 5);
+      hp -= damage;
+      if (hp < 0) hp = 0;
+      hpBar.style.width = hp + "%";
+      appendToMapLog("🔥 Thi triển kỹ năng gây sát thương và tiêu hao khí huyết: -" + damage);
+    }
+
+    function appendToMapLog(msg) {
+      const box = document.getElementById("mapLog");
+      const p = document.createElement("p");
+      p.textContent = msg;
+      box.prepend(p);
     }
   </script></body>
 </html>
